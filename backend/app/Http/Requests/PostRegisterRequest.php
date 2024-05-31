@@ -23,7 +23,7 @@ class PostRegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'fullname' => 'required|string',
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|confirmed',
             'role' => 'nullable|string',
@@ -35,7 +35,7 @@ class PostRegisterRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'name' => 'Nama Lengkap',
+            'fullname' => 'Nama Lengkap',
             'email' => 'Alamat Email',
             'password' => 'Kata Sandi',
             'role' => 'Hak Akses',

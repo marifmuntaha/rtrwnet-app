@@ -6,14 +6,18 @@ import reportWebVitals from "./reportWebVitals";
 
 import "./utils/axiosConfig";
 import "./assets/scss/dashlite.scss";
+import {Provider} from "react-redux";
+import {store} from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <>
-        <BrowserRouter>
-            <App/>
-        </BrowserRouter>
-    </>
+    <Provider store={store}>
+        <React.Fragment>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
+        </React.Fragment>
+    </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
