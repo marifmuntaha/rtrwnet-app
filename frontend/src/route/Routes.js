@@ -31,7 +31,7 @@ const AllRoutes = (props: RouteProps) => {
                             path={route.path}
                             element={
                                 api.isUserAuthenticated() === false
-                                    ? (<Navigate to={{pathname: '/masuk', search: 'next=' + route.path}}/>)
+                                    ? (<Navigate to={{pathname: '/masuk'}}/>)
                                     : (<Layout {...props}>{route.element}</Layout>)
                             }/>
                     ))}

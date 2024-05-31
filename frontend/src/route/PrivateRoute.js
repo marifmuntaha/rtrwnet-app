@@ -14,7 +14,7 @@ const PrivateRoute = ({component: Component, roles, ...rest}) => {
                     )
                 }
                 const loggedInUser = api.getLoggedInUser();
-                if (roles && roles.indexOf(loggedInUser) === -1) {
+                if (roles && roles.indexOf(loggedInUser.user) === -1) {
                     return <Navigate to={{pathname: '/'}}/>
                 }
                 return <Component {...props}/>

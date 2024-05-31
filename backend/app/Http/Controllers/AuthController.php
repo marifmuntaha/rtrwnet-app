@@ -19,7 +19,7 @@ class AuthController extends Controller
                 ? response([
                     'status' => true,
                     'message' => 'Pendaftaran berhasil, anda akan dialihkan kehalaman member',
-                    'result' => Arr::add($user, 'token', $user->createToken($user->email)->plainTextToken)
+                    'result' => $user
                 ]) : throw new Exception('Terjadi kesalahan server');
         } catch (Exception $exception){
             return response([
@@ -37,7 +37,7 @@ class AuthController extends Controller
                     'status' => true,
                     'message' => 'Berhasil masuk, anda akan dialihkan dalam 2 detik.',
                     'result' => [
-                        'user' => $request,
+                        'user' => $request->user(),
                         'token' => $request->user()->createToken($request->email)->plainTextToken,
                     ]
                 ]) : throw new Exception('Alamat email atau kata sandi salah');
@@ -60,10 +60,10 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            return $request->user()->tokens()->delete()
+            return $request->user()->currentAccessToken()->delete()
                 ? response([
                     'status' => true,
-                    'message' => 'Berhasil logout, anda akan dialihkan dalam 2 detik.',
+                    'message' => 'Berhasil keluar, anda akan dialihkan dalam 2 detik.',
                     'result' => null
                 ]) : throw new Exception('Terjadi kesalahan server');
         } catch (Exception $exception){

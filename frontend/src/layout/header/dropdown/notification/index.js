@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {DropdownToggle, DropdownMenu, UncontrolledDropdown} from "reactstrap";
 
 import Icon from "../../../../components/icon";
 import data from "./NotificationData";
-import axios from "axios";
 
 const NotificationItem = (props) => {
     const {icon, iconStyle, text, time, id} = props;
@@ -25,13 +24,7 @@ const Notification = () => {
         title: '',
         notification : {}
     });
-    const handleNotificationData = async () => {
-        await axios.get('/auth/notification').then(resp => {
-        })
-    }
-    useEffect(() => {
-        handleNotificationData().then();
-    }, []);
+
     return (
         <UncontrolledDropdown className="user-dropdown">
             <DropdownToggle tag="a" className="dropdown-toggle nk-quick-nav-icon">

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.baseURL = `${process.env.REACT_APP_API_URL}`
+axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.baseURL = `${process.env.REACT_APP_API_ENDPOINT}`;
 
 axios.interceptors.response.use(
     (response) => {
@@ -157,14 +157,7 @@ class Core {
 
     isUserAuthenticated = () => {
         const user = this.getLoggedInUser()
-
-        if (!user) {
-            return false
-        }
-        const decoded = user.token
-        const currentTime = Date.now() / 1000
-        if (decoded.exp < currentTime) {
-            console.warn('access token expired')
+        if (!user){
             return false
         } else {
             return true

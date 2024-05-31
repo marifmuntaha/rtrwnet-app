@@ -4,12 +4,12 @@ const api = new Core()
 
 // account
 function login(params: {email: string, password: string}) {
-    const baseUrl = '/login/'
+    const baseUrl = '/auth/login'
     return api.create(`${baseUrl}`, params)
 }
 
 function logout() {
-    const baseUrl = '/logout/'
+    const baseUrl = '/auth/logout'
     return api.create(`${baseUrl}`, {})
 }
 

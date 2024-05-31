@@ -4,7 +4,7 @@ import Head from "../../layout/head";
 import {Block, BlockBetween, BlockHead, BlockHeadContent, BlockTitle, Col, PreviewAltCard, Row} from "../../components";
 import TrafficDougnut from "../partials/dashboard/TrafficDougnut";
 import UserTable from "../partials/dashboard/UserTable";
-import WidgetDashboard from "../partials/dashboard/WidgetDashboard";
+// import WidgetDashboard from "../partials/dashboard/WidgetDashboard";
 
 const Dashboard = () => {
     return (
@@ -20,7 +20,7 @@ const Dashboard = () => {
                         </BlockHeadContent>
                     </BlockBetween>
                 </BlockHead>
-                <WidgetDashboard/>
+                {/*<WidgetDashboard/>*/}
                 <Block>
                     <Row>
                         <Col md="4">

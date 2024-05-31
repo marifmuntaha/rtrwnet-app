@@ -13,12 +13,11 @@ import {
     Icon,
     PreviewCard,
 } from "../../components";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {ToastContainer} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {resetAuth, signupUser} from "../../redux/auth/actions";
 import type {RootState} from "../../redux/store";
-import classNames from "classnames";
 import {useForm} from "react-hook-form";
 
 const Register = () => {
@@ -26,31 +25,28 @@ const Register = () => {
     const state = useSelector((state: RootState) => {
         return state.Auth
     });
-    const [formData, setFormData] = useState({
-        fullname: '',
-        email: '',
-        phone: '',
-        password: '',
-        password_confirmation: ''
-    })
     const [passState, setPassState] = useState(false);
     const [rePassState, setRePassState] = useState(false);
-    const handleFormInput = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value})
+    const {
+        register,
+        handleSubmit,
+        getValues,
+        formState: {errors}
+    } = useForm();
+    const onFormSubmit = () => {
+        dispatch(signupUser(
+            getValues('fullname'),
+            getValues('email'),
+            getValues('password'),
+            getValues('password_confirmation'),
+            getValues('phone')));
     }
-    const formClass = classNames({
-        "form-validate": true,
-        "is-alter": '',
-    });
-    const {register, handleSubmit, formState: {errors}} = useForm();
-    const onFormSubmit = (e) => {
-        // dispatch(signupUser(formData.fullname, formData.email, formData.password, formData.password_confirmation, formData.phone));
-    }
-    // useEffect(() => {
-    //     dispatch(resetAuth());
-    // }, [dispatch]);
+    useEffect(() => {
+        dispatch(resetAuth());
+    }, [dispatch]);
     return (
         <>
+            {state.userSignUp ? <Navigate to={'/masuk'}/> : null}
             <Head title="Pendaftaran"/>
             <ToastContainer/>
             <Block className="nk-block-middle nk-auth-body  wide-xs">
@@ -186,12 +182,21 @@ const Register = () => {
                                 <input
                                     type={rePassState ? "text" : "password"}
                                     id="password_confirmation"
-                                    placeholder="Ualngi sandi anda"
+                                    placeholder="Ulangi sandi anda"
                                     className={`form-control-lg form-control ${rePassState ? "is-hidden" : "is-shown"}`}
                                     {...register('password_confirmation', {
                                         required: true,
+                                        validate: (val: string) => {
+                                            const { password } = getValues()
+                                            return password === val || "Kata Sandi tidak sama.";
+                                        },
                                     })}
                                 />
+                                {errors.password_confirmation && errors.password_confirmation.type === "required" &&
+                                    <span className="invalid">Kolom tidak boleh kosong.</span>}
+                                {errors.password_confirmation && errors.password_confirmation.type === "validate" && (
+                                    <span className="invalid">{errors.password_confirmation.message}</span>
+                                )}
                             </div>
                         </div>
                         <div className="form-group">

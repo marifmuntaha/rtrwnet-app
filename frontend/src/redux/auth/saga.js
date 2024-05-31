@@ -6,10 +6,8 @@ import { Core, setAuthorization } from '../../helpers/api/core'
 // helpers
 import { login as loginApi, logout as logoutApi, signup as signupApi, forgotPassword as forgotPasswordApi } from '../../helpers/api/auth'
 
-// actions
 import { authApiResponseSuccess, authApiResponseError } from './actions'
 
-// constants
 import {
     API_RESPONSE_SUCCESS,
     API_RESPONSE_ERROR,
@@ -23,11 +21,11 @@ import {
 
 const api = new Core();
 
-function* login({ payload: { username, password } }: UserData): SagaIterator {
+function* login({ payload: { email, password } }): SagaIterator {
+    console.log(email)
     try {
-        const response = yield call(loginApi, { username, password })
-        const user = response.data
-        // NOTE - You can change this according to response format from your api
+        const response = yield call(loginApi, { email, password })
+        const user = response.data.result
         api.setLoggedInUser(user)
         setAuthorization(user['token'])
         yield put(authApiResponseSuccess(LOGIN_USER, user))
@@ -38,9 +36,6 @@ function* login({ payload: { username, password } }: UserData): SagaIterator {
     }
 }
 
-/**
- * Logout the user
- */
 function* logout(): SagaIterator {
     try {
         yield call(logoutApi)

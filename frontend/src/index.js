@@ -4,7 +4,6 @@ import {BrowserRouter} from "react-router-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import "./utils/axiosConfig";
 import "./assets/scss/dashlite.scss";
 import {Provider} from "react-redux";
 import {store} from "./redux/store";

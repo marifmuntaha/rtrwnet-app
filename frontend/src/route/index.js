@@ -3,6 +3,7 @@ import {Route, RouteProps} from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 
 const Dashboard = React.lazy(() => import("../pages/dashboard"));
+const Account = React.lazy(() => import("../pages/master/account"));
 const Login = React.lazy(() => import("../pages/auth/Login"));
 const Register = React.lazy(() => import("../pages/auth/Register"));
 const Reset = React.lazy(() => import("../pages/auth/Reset"));
@@ -16,6 +17,16 @@ const appRoutes: RouteProps = {
     roles: ['Admin'],
     icon: 'home',
     element: <Dashboard />,
+}
+const masterRoutes: RouteProps = {
+    path: '/master',
+    name: 'Master',
+    children: {
+        path: '/master/rekening',
+        name: 'Rekening',
+        element: <Account/>,
+        route: PrivateRoute,
+    }
 }
 
 const authRoutes: RouteProps[] = [
@@ -73,7 +84,7 @@ const flattenRoutes = (routes: RoutesProps[]) => {
     return flatRoutes
 }
 
-const authProtectedRoutes = [appRoutes]
+const authProtectedRoutes = [appRoutes, masterRoutes]
 const publicRoutes = [...authRoutes, ...otherPublicRoutes]
 
 const authProtectedFlattenRoutes = flattenRoutes([...authProtectedRoutes])

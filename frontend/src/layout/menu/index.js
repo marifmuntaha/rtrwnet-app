@@ -4,7 +4,7 @@ import menuMember from "./MenuMember";
 import {NavLink, Link} from "react-router-dom";
 import {Icon} from "../../components";
 import classNames from "classnames";
-import {UserContext} from "../../context/UserContext";
+import {useSelector} from "react-redux";
 
 let menu = (user) => {
     return user.role === "1" ? menuAdmin : menuMember
@@ -264,7 +264,7 @@ const MenuSub = ({icon, link, text, sub, sidebarToggle, mobileView, ...props}) =
 };
 
 const Menu = ({sidebarToggle, mobileView}) => {
-    const user = useContext(UserContext);
+    const user = useSelector((state) => state.Auth.user.user);
     const [data, setMenuData] = useState(menu(user));
     useEffect(() => {
         data.forEach((item, index) => {
